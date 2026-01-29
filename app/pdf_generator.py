@@ -340,7 +340,7 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     if advertencias and y_position > 1.6 * inch:
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_AZUL_OSCURO))
         pdf.setFont("Helvetica-Bold", 14)
-        pdf.drawString(margin_left, y_position, "⚠️ Ten en cuenta")
+        pdf.drawString(margin_left, y_position, "■ Ten en cuenta")
         y_position -= 14
         
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_GRIS))
