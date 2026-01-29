@@ -201,9 +201,9 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     pdf.line(1.5 * inch, y_position, width - 1.5 * inch, y_position)
     
     # Género
-    y_position -= 0.4 * inch
+    y_position -= 0.35 * inch
     pdf.setFillColorRGB(*hex_to_rgb(COLOR_VERDE))
-    pdf.setFont("Helvetica-Bold", 12)
+    pdf.setFont("Helvetica-Bold", 14)
     pdf.drawString(0.75 * inch, y_position, "Género:")
     
     pdf.setFillColorRGB(*hex_to_rgb(COLOR_NEGRO))
@@ -216,13 +216,13 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     
     # Conceptos clave (si hay)
     if conceptos_texto:
-        y_position -= 0.4 * inch
-        pdf.setFillColorRGB(*hex_to_rgb(COLOR_CYAN))
-        pdf.setFont("Helvetica-Bold", 12)
+        y_position -= 0.35 * inch
+        pdf.setFillColorRGB(*hex_to_rgb(COLOR_AZUL_OSCURO))
+        pdf.setFont("Helvetica-Bold", 14)
         pdf.drawString(0.75 * inch, y_position, "🎯 Conceptos clave:")
         
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_GRIS))
-        pdf.setFont("Helvetica", 11)
+        pdf.setFont("Helvetica", 12)
         # Wrap conceptos en múltiples líneas si es necesario
         conceptos_lines = textwrap.wrap(conceptos_texto, width=70)
         for line in conceptos_lines[:4]:  # Max 4 líneas
@@ -231,15 +231,15 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     
     # Reconocimientos (si hay)
     if reconocimientos_lista:
-        y_position -= 0.4 * inch
+        y_position -= 0.35 * inch
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_VERDE))
-        pdf.setFont("Helvetica-Bold", 12)
+        pdf.setFont("Helvetica-Bold", 14)
         pdf.drawString(0.75 * inch, y_position, "🏆 Reconocimientos:")
         
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_NEGRO))
-        pdf.setFont("Helvetica", 11)
+        pdf.setFont("Helvetica", 12)
         for reconocimiento in reconocimientos_lista[:5]:  # Max 5
-            y_position -= 15
+            y_position -= 14
             pdf.drawString(0.75 * inch, y_position, reconocimiento)
     
     # Finalizar página 1
@@ -259,35 +259,35 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     # ─────────────────────────────────────
     # SECCIÓN: DE QUÉ TRATA ESTE LIBRO
     # ─────────────────────────────────────
-    pdf.setFillColorRGB(*hex_to_rgb(COLOR_CYAN))
-    pdf.setFont("Helvetica-Bold", 13)
+    pdf.setFillColorRGB(*hex_to_rgb(COLOR_VERDE))
+    pdf.setFont("Helvetica-Bold", 14)
     pdf.drawString(margin_left, y_position, "📖 De qué trata este libro")
-    y_position -= 18
+    y_position -= 16
     
     pdf.setFillColorRGB(*hex_to_rgb(COLOR_NEGRO))
-    pdf.setFont("Helvetica", 10)
+    pdf.setFont("Helvetica", 12)
     
     # Wrap texto de sinopsis
-    sinopsis_lines = textwrap.wrap(sinopsis, width=80)
+    sinopsis_lines = textwrap.wrap(sinopsis, width=75)
     for line in sinopsis_lines[:12]:  # Max 12 líneas
         if y_position < 2 * inch:
             break
         pdf.drawString(margin_left, y_position, line)
-        y_position -= 12
+        y_position -= 13
     
-    y_position -= 18
+    y_position -= 16
     
     # ─────────────────────────────────────
     # SECCIÓN: LO QUE DICEN LOS LECTORES
     # ─────────────────────────────────────
     if extractos and y_position > 2.5 * inch:
-        pdf.setFillColorRGB(*hex_to_rgb(COLOR_CYAN))
-        pdf.setFont("Helvetica-Bold", 13)
+        pdf.setFillColorRGB(*hex_to_rgb(COLOR_AZUL_OSCURO))
+        pdf.setFont("Helvetica-Bold", 14)
         pdf.drawString(margin_left, y_position, "💬 Lo que dicen los lectores")
-        y_position -= 18
+        y_position -= 16
         
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_GRIS))
-        pdf.setFont("Helvetica-Oblique", 9)
+        pdf.setFont("Helvetica-Oblique", 12)
         
         for extracto in extractos:
             if y_position < 2.2 * inch:
@@ -302,13 +302,13 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
                 if y_position < 2.2 * inch:
                     break
                 pdf.drawString(margin_left + 10, y_position, line)
-                y_position -= 10
+                y_position -= 11
             
             # Fuente
-            pdf.setFont("Helvetica", 8)
+            pdf.setFont("Helvetica", 10)
             pdf.drawString(margin_left + 10, y_position, f"— {fuente}")
-            y_position -= 16
-            pdf.setFont("Helvetica-Oblique", 9)
+            y_position -= 14
+            pdf.setFont("Helvetica-Oblique", 12)
         
         y_position -= 8
     
@@ -316,21 +316,21 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     # SECCIÓN: ¿PARA QUIÉN ES ESTE LIBRO?
     # ─────────────────────────────────────
     if y_position > 2 * inch:
-        pdf.setFillColorRGB(*hex_to_rgb(COLOR_CYAN))
-        pdf.setFont("Helvetica-Bold", 12)
+        pdf.setFillColorRGB(*hex_to_rgb(COLOR_VERDE))
+        pdf.setFont("Helvetica-Bold", 14)
         pdf.drawString(margin_left, y_position, "👥 ¿Para quién es este libro?")
-        y_position -= 15
+        y_position -= 14
         
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_NEGRO))
-        pdf.setFont("Helvetica", 10)
+        pdf.setFont("Helvetica", 12)
         
         # Wrap audiencia
-        audiencia_lines = textwrap.wrap(audiencia_texto, width=75)
+        audiencia_lines = textwrap.wrap(audiencia_texto, width=72)
         for line in audiencia_lines[:2]:
             if y_position < 1.8 * inch:
                 break
             pdf.drawString(margin_left, y_position, line)
-            y_position -= 12
+            y_position -= 13
         
         y_position -= 10
     
@@ -338,13 +338,13 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
     # SECCIÓN: TEN EN CUENTA
     # ─────────────────────────────────────
     if advertencias and y_position > 1.6 * inch:
-        pdf.setFillColorRGB(*hex_to_rgb(COLOR_VERDE))
-        pdf.setFont("Helvetica-Bold", 11)
+        pdf.setFillColorRGB(*hex_to_rgb(COLOR_AZUL_OSCURO))
+        pdf.setFont("Helvetica-Bold", 14)
         pdf.drawString(margin_left, y_position, "⚠️ Ten en cuenta")
         y_position -= 14
         
         pdf.setFillColorRGB(*hex_to_rgb(COLOR_GRIS))
-        pdf.setFont("Helvetica", 9)
+        pdf.setFont("Helvetica", 12)
         
         # Advertencias
         for advertencia in advertencias[:4]:  # Max 4 advertencias
@@ -353,7 +353,7 @@ def generar_pdf(ficha_data: dict, titulo: str = None, autor: str = None) -> byte
             adv_lines = textwrap.wrap(f"• {advertencia}", width=75)
             for line in adv_lines[:2]:
                 pdf.drawString(margin_left, y_position, line)
-                y_position -= 10
+                y_position -= 11
     
     # ─────────────────────────────────────
     # FOOTER CON CRÉDITOS (solo página 2)
