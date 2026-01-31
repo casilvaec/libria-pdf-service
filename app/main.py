@@ -28,7 +28,7 @@ def validar_api_key(x_api_key: str | None):
         if not x_api_key or x_api_key != expected:
             raise HTTPException(status_code=401, detail="Invalid API key")
 
-
+@app.head("/health")
 @app.get("/health")
 def health():
     return {"ok": True, "service": "libria-pdf", "status": "up"}
